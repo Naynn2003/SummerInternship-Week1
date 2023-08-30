@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 27 july
+      //day 1 : javascript objects
+
+      let mydata = {};
+      document.write(mydata);
+      document.write("<br>");
+
+      let mydata1 = { gujarat: "ahemdabad" };
+      document.write(mydata1["gujarat"] + "<br>");
+
+      let mydata2 = {
+        ahmedabad: 100,
+        surat: 150,
+        vadodara: 75,
+      };
+      document.write(mydata2["vadodara"] + "<br>");
+
+      let mydata3 = {
+        ahmedabad: 100,
+        surat: [150, 200, 1],
+        vadodara: 75,
+      };
+      //print 200
+      document.write(mydata3["surat"][1] + "<br>");
+
+      let mydata4 = {
+        ahmedabad: [
+          { date: "25 july 2023", cases: 210 },
+          { date: "26 july 2023", cases: 220 },
+          { date: "257july 2023", cases: 230 },
+        ],
+        surat: [150, 200, 1],
+        vadodara: 75,
+      };
+      //print220
+      document.write(mydata4["ahmedabad"][1]["cases"])
+    </script>
+  </body>
+</html>

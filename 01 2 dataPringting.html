@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    //find the number of keys in larger objects in apis
+
+    let myObj = {
+      "gujarat" : "ahemdabad",
+      "maharashtra" : "mumbai",
+      "rajasthan" : "jaipur"
+    }
+
+    for ( let i  in myObj){
+      document.write(i + "<br>")
+    }
+
+    document.write("<hr>")
+
+    for ( let i  in myObj){
+      document.write(myObj[i] + "<br>")
+    }
+
+    document.write("<hr>")
+
+    for ( let i  in myObj){
+      document.write(myObj[i], " is the capital of ", i + ".<br>")
+    }
+    
+    document.write("<hr>")
+
+    let cases = {
+      ahemdabad : [1500,1600,2],
+      rajkot : [500,600,1],
+      surat : [100,50,1],
+    }
+    
+    for (let i in cases){
+      document.write(i, " :- total new cases : ", cases[i][0], ", Recoverd cases : ", cases[i][1], ", death cases : ", cases[i][2] ,"<br>")
+    }
+  </script>
+</body>
+</html>

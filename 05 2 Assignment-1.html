@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #output {
+      margin-top: 20px;
+    }
+    input[type="text"] {
+      padding: 8px;
+    }
+    button {
+      padding: 8px 12px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+  <title>Mutual Fund API</title>
+</head>
+<body>
+  <h1>Mutual Fund API</h1>
+  
+  <p>Total number of schemes available: <span id="totalSchemes"></span></p>
+  
+  <label for="schemeCodeInput">Enter scheme code:</label>
+  <input type="text" id="schemeCodeInput">
+  <button id="searchButton">Search</button>
+  
+  <p id="output"></p>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const totalSchemesElement = document.getElementById("totalSchemes");
+      const schemeCodeInput = document.getElementById("schemeCodeInput");
+      const searchButton = document.getElementById("searchButton");
+      const outputDiv = document.getElementById("output");
+      
+      // Fetch total number of schemes
+      fetch("https://api.mfapi.in/mf")
+        .then(response => response.json())
+        .then(data => {
+          totalSchemesElement.textContent = data.meta.total;
+        })
+        .catch(error => {
+          console.error("Error fetching data:", error);
+        });
+      
+      searchButton.addEventListener("click", () => {
+        const selectedSchemeCode = schemeCodeInput.value;
+        
+        if (!selectedSchemeCode) {
+          outputDiv.textContent = "Please enter scheme code.";
+          return;
+        }
+        
+        fetch(`https://api.mfapi.in/mf/${selectedSchemeCode}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.error) {
+              outputDiv.textContent = "Scheme not found.";
+            } else {
+              outputDiv.textContent = `Scheme Name: ${data.meta.scheme_name}`;
+            }
+          })
+          .catch(error => {
+            console.error("Error fetching data:", error);
+            outputDiv.textContent = "An error occurred.";
+          });
+      });
+    });
+  </script>
+</body>
+</html>

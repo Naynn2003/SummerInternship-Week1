@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      email :
+      <input type="email" name="email" id="email" placeholder="Enter Email" />
+      <input type="submit" onclick="data(this.form); return false;" />
+    </form>
+    <p id="msg"></p>
+    <script>
+      function data(form) {
+        let e = form.email.value;
+        if (e === "") {
+          document.getElementById("msg").innerHTML = "Enter a Valid email.";
+        } else {
+          document.getElementById("msg").innerHTML = `Your email is : ${e}`;
+        }
+      }
+    </script>
+  </body>
+</html>

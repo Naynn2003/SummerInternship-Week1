@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COVID Data Check</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f2f2f2;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        font-weight: bold;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+
+      button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid #ccc;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      #output {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <label for="dateInput">Enter Date (YYYY-MM-DD):</label>
+      <input type="text" id="dateInput" placeholder="YYYY-MM-DD" />
+      <button id="submitButton">Submit</button>
+      <div id="output"></div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const submitButton = document.getElementById("submitButton");
+        const dateInput = document.getElementById("dateInput");
+        const outputDiv = document.getElementById("output");
+      
+        submitButton.addEventListener("click", async () => {
+          const selectedDate = dateInput.value;
+      
+          if (!selectedDate) {
+            outputDiv.textContent = "Please enter a date.";
+            return;
+          }
+      
+          const covidData = await fetchData();
+          console.log(covidData); // Debug: Print the fetched data to the console
+      
+          const selectedData = covidData.find(entry => entry.date === selectedDate);
+      
+          if (!selectedData) {
+            outputDiv.textContent = "Date not found.";
+            return;
+          }
+      
+          const newCases = selectedData.dailyconfirmed;
+          const newDeaths = selectedData.dailydeceased;
+      
+          outputDiv.innerHTML = `
+            <table>
+              <tr>
+                <th>Date</th>
+                <th>New Cases</th>
+                <th>New Deaths</th>
+              </tr>
+              <tr>
+                <td>${selectedDate}</td>
+                <td>${newCases}</td>
+                <td>${newDeaths}</td>
+              </tr>
+            </table>
+          `;
+        });
+      
+        async function fetchData() {
+          try {
+            const response = await fetch(
+              "https://data.covid19india.org/data.json"
+            );
+            const data = await response.json();
+            return data.cases_time_series;
+          } catch (error) {
+            console.error("Error fetching data:", error);
+            return [];
+          }
+        }
+      });
+      
+    </script>
+  </body>
+</html>

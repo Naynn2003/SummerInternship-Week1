@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bitcoin Price</title>
+</head>
+<body>
+  <div id="bitcoin-price"></div>
+
+  <script>
+
+    // 31 july
+    // day 3 : data fetching from api
+    // api 1 : bitcoin api
+
+
+    async function fetchBitcoinPrice() {
+      const bitcoinPriceElement = document.getElementById("bitcoin-price");
+      const apiUrl = "https://api.coindesk.com/v1/bpi/currentprice.json";
+      
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        const usdPrice = data.bpi.USD.rate;
+        const updateTime = data.time.updated;
+
+        const priceDisplay = `Current Bitcoin Price: ${usdPrice} USD<br>Last Updated: ${updateTime}`;
+        bitcoinPriceElement.innerHTML = priceDisplay;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        bitcoinPriceElement.textContent = "An error occurred while fetching the Bitcoin price.";
+      }
+    }
+    
+    document.addEventListener("DOMContentLoaded", fetchBitcoinPrice);
+  </script>
+</body>
+</html>
